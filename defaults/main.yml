@@ -29,3 +29,5 @@ fpm_conf:
   clear_env: Yes
   security.limit_extensions: .php, .phar
   access.format: "%R - %u %t \"%m %r\" %s"
+php_ini_values:
+  expose_php: 0
