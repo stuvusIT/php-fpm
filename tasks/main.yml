@@ -1,0 +1,41 @@
+---
+- name: Update repositories cache and install "php" package
+  apt:
+    name: php-fpm
+  when: ansible_pkg_mgr == "apt"
+
+- name: Get php version number
+  find:
+    path: "/etc/php/" 
+    patterns: "*" 
+    file_type: directory
+  register: php_version
+
+- name: Update php.ini
+  blockinfile:
+    path: /etc/php/{{ php_version }}/php.ini
+    marker: "; {mark} ANSIBLE MANAGED BLOCK"
+    backup: yes
+    block: |
+      {{ item.name}} {{ item.value }}
+  with_items: "{{ php_ini_values }}"
+
+- name: Create php-fpm.conf
+  template:
+    src: templates/php-fpm.conf.j2
+    dest: /etc/php/{{ php_version }}/fpm/php-fpm.conf
+
+- name: Create php-fpm pool.confs
+  template:
+    src: templates/pool.conf.j2
+    dest: /etc/php/{{ php_version }}/fpm/pool.d/{{ pool.name }}.conf
+  with_items: "{{ pools }}"
+  loop_control:
+    loop_var: pool
+
+- name: Enable and start php-fpm
+  systemd:
+    name: php-fpm.service
+    state: started
+    enabled: True
+  when: ansible_service_mgr == "systemd"
