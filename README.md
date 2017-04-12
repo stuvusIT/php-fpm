@@ -1,4 +1,4 @@
-# Role Name
+# Php-FPM Ansible role
 
 This is an ansible role which sets up a php-fpm instance and configures the pools.
 
@@ -17,12 +17,15 @@ To see all vars possible for php-fpm see
 To see all vars possible for php.ini see
 [php.ini page](https://secure.php.net/manual/de/ini.list.php)
 
-```yml
-fpm_conf.log_level: error
-php_ini_values:
-  apc.enabled: 1
+For a domain
+| Name                      | Required                 | Description       | 
+|---------------------------|:------------------------:|---------------|
+| `name`          | :heavy_check_mark:       | Name of the pool         |
+| `listen`          | :heavy_check_mark:         | The address on which to accept FastCGI requests. Valid syntaxes are: 'ip.add.re.ss:port', 'port', '/path/to/unix/socket'. This option is mandatory for each pool.  |
+| `user`          | :heavy_check_mark:         | Unix user of FPM processes. This option is mandatory.|
+| `pm`          | :heavy_check_mark:           | Choose how the process manager will control the number of child processes. Possible values: static, ondemand, dynamic. This option is mandatory. |
+| `pm.max_children`          | :heavy_check_mark:         | The number of child processes to be created when pm is set to static and the maximum number of child processes to be created when pm is set to dynamic. This option is mandatory. |
 
-```
 
 
 

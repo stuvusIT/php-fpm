@@ -2,6 +2,7 @@
 - name: Update repositories cache and install "php" package
   apt:
     name: php-fpm
+    update_cache: yes
   when: ansible_pkg_mgr == "apt"
 
 - name: Get php version number
