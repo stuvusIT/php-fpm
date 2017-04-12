@@ -1,33 +1,32 @@
 ---
-fpm_conf:
-  include: "*.conf"
-  include_pools: "pool.d/*.conf"
-  pid: /run/php-fpm.pid
-  error_log: log/php-fpm.log
-  log_level: notice
-  syslog.facility: daemon
-  syslog.ident: php-fpm
-  emergency_restart_threshold: 0
-  emergency_restart_interval: 0
-  process_control_timeout: 0
-  process.max: 0
-  daemonize: Yes
-  rlimit_files: 16400
-  rlimit_core: 0
-  systemd_interval: 10
-  listen.backlog: -1
-  listen.allowed_clients: any
-  listen.mode: 0660
-  pm.start_servers: min_spare_servers + (max_spare_servers - min_spare_servers) / 2
-  pm.process_idle_timeout: 10s
-  pm.max_requests: 0
-  ping.response: pong
-  request_terminate_timeout: 0
-  request_slowlog_timeout: 0
-  slowlog: log/php-fpm.log.slow
-  catch_workers_output: no
-  clear_env: Yes
-  security.limit_extensions: .php, .phar
-  access.format: "%R - %u %t \"%m %r\" %s"
+include: "*.conf"
+include_pools: "pool.d/*.conf"
+pid: /run/php-fpm.pid
+error_log: log/php-fpm.log
+log_level: notice
+syslog.facility: daemon
+syslog.ident: php-fpm
+emergency_restart_threshold: 0
+emergency_restart_interval: 0
+process_control_timeout: 0
+process.max: 0
+daemonize: Yes
+rlimit_files: 16400
+rlimit_core: 0
+systemd_interval: 10
+listen.backlog: -1
+listen.allowed_clients: any
+listen.mode: 0660
+pm.start_servers: min_spare_servers + (max_spare_servers - min_spare_servers) / 2
+pm.process_idle_timeout: 10s
+pm.max_requests: 0
+ping.response: pong
+request_terminate_timeout: 0
+request_slowlog_timeout: 0
+slowlog: log/php-fpm.log.slow
+catch_workers_output: no
+clear_env: Yes
+security.limit_extensions: .php, .phar
+access.format: "%R - %u %t \"%m %r\" %s"
 php_ini_values:
   expose_php: 0
