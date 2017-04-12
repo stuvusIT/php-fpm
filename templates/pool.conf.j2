@@ -26,12 +26,12 @@ listen.allowed_clients = {{ pool.listen.allowed_clients | default(allowed_client
 ; connections from a web server.
 ; Many BSD-derived systems allow connections regardless of permissions.
 ; Default values: user and group are set as the running user, mode is set to 0660.
-{% if pool.listen.owner %}
+{% if pool.listen.owner is defined%}
     listen.owner = pool.listen.owner
 {% endif %}
 
 ; See listen.owner
-{% if pool.listen.group %}
+{% if pool.listen.group is defined %}
     listen.group = pool.listen.group
 {% endif %}
 
@@ -41,13 +41,13 @@ listen.mode = {{ pool.listen.mode | default(listen.mode)}}
 ; When POSIX Access Control Lists are supported you can set them using this option. 
 ; When set, listen.owner and listen.group are ignored.
 ; Value is a comma separated list of user names. Since PHP 5.6.5.
-{% if pool.listen.acl_users %}
+{% if pool.listen.acl_users is defined %}
     listen.acl_users = {{ pool.listen.acl_users }}
 {% endif %}
 
 ; See listen.acl_users. 
 ; Value is a comma separated list of group names. Since PHP 5.6.5.
-{% if pool.listen.acl_groups %}
+{% if pool.listen.acl_groups is defined %}
     listen.acl_groups = {{ pool.listen.acl_groups }}
 {% endif %}
 
@@ -55,7 +55,7 @@ listen.mode = {{ pool.listen.mode | default(listen.mode)}}
 user = {{ user | mandatory }}
 
 ; Unix group of FPM processes. If not set, the default user's group is used.
-{% if group %}
+{% if group is defined %}
     group = pool.group
 {% endif %}
 
@@ -107,7 +107,7 @@ pm.max_requests = {{ pool.pm.max_requests | default(pm.max_requests)}}
 ; The URI to view the FPM status page.
 ; If this value is not set, no URI will be recognized as a status page.
 ; Default value: none.
-{% if pool.pm.status_path %}
+{% if pool.pm.status_path is defined %}
     pm.status_path = {{ pool.pm.status_path }}    
 {% endif %}
 
@@ -115,7 +115,7 @@ pm.max_requests = {{ pool.pm.max_requests | default(pm.max_requests)}}
 ; If this value is not set, no URI will be recognized as a ping page.
 ; This could be used to test from outside that FPM is alive and responding.
 ; Please note that the value must start with a leading slash (/).
-{% if pool.ping.path %}
+{% if pool.ping.path is defined %}
     ping.path = {{ pool.ping.path }}
 {% endif %}
 
@@ -127,12 +127,12 @@ ping.response = {{ pool.ping.response | default(ping.response)}}
 ; Specify the nice(2) priority to apply to the worker process (only if set).
 ; The value can vary from -19 (highest priority) to 20 (lower priority).
 ; Default value: not set.
-{% if pool.processes.priority %}
+{% if pool.processes.priority is defined %}
     processes.priority = {{ pool.processes.priority}}    
 {% endif %}
 
 ; Specify prefix for path evaluation
-{% if pool.prefix %}
+{% if pool.prefix is defined %}
     prefix = {{ pool.prefix }}
 {% endif %}
 
@@ -155,7 +155,7 @@ slowlog = {{ pool.slowlog | default(slowlog)}}
 
 ; Set open file descriptor rlimit for child processes in this pool.
 ; Default value: system defined value.
-{% if pool.rlimit_files %}
+{% if pool.rlimit_files is defined %}
     rlimit_files = {{ pool.rlimit_files }}    
 {% endif %}
 
@@ -163,21 +163,21 @@ slowlog = {{ pool.slowlog | default(slowlog)}}
 ; Set max core size rlimit for child processes in this pool.
 ; Possible Values: 'unlimited' or an integer greater or equal to 0.
 ; Default value: system defined value.
-{% if pool.rlimit_core %}
+{% if pool.rlimit_core is defined %}
     rlimit_core = {{ pool.rlimit_core }}
 {% endif %}
 
 ; Chroot to this directory at the start.
 ; This value must be defined as an absolute path.
 ; When this value is not set, chroot is not used.
-{% if pool.chroot %}
+{% if pool.chroot is defined %}
     chroot = pool.chroot
 {% endif %}
 
 ; Chdir to this directory at the start.
 ; This value must be an absolute path.
 ; Default value: current directory or / when chroot.
-{% if pool.chdir %}
+{% if pool.chdir is defined %}
     chdir = {{ pool.chdir }}
 {% endif %}
 
@@ -200,7 +200,7 @@ clear_env = {{ pool.clear_env | default(clear_env)}}
 security.limit_extensions = {{ pool.security.limit_extensions | default(security.limit_extensions) }}
 
 ; The access log file. Default value: not set
-{% if pool.access.log %}
+{% if pool.access.log is defined %}
     access.log = {{ pool.access.log }}
 {% endif %}
 

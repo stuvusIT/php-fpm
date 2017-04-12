@@ -24,7 +24,7 @@
 ; Pid file
 ; Note: the default prefix is /var
 ; Default Value: none
-{% if pid %}
+{% if pid is defined %}
     pid = {{ pid }}    
 {% endif %}
 
@@ -80,7 +80,7 @@ process.max = {{ process.max }}
 ; Specify the nice(2) priority to apply to the master process (only if set).
 ; The value can vary from -19 (highest priority) to 20 (lower priority).
 ; Default value: not set.
-{% if expr %}
+{% if process.priority  is defined %}
     process.priority = {{ process.priority }}    
 {% endif %}
 
@@ -90,7 +90,7 @@ daemonize = {{ daemonize }}
 
 ;Set open file descriptor rlimit for the master process.
 ; Default value: not specifyed in doc
-{% if expr %}
+{% if rlimit_files is defined %}
     rlimit_files = {{ rlimit_files }}    
 {% endif %}
 
@@ -101,7 +101,7 @@ rlimit_core = {{ rlimit_core}}
 ; Specify the event mechanism FPM will use.
 ; The following is available: select, pool, epoll, kqueue (*BSD), port (Solaris).
 ; Default value: not set (auto detection).
-{% if events.mechanism %}
+{% if events.mechanism is defined %}
     events.mechanism = {{ events.mechanism }}
 {% endif %}
 
