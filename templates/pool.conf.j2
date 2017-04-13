@@ -152,10 +152,8 @@ pm.max_requests = {{ pool.pm.max_requests | default(pm_max_requests)}}
 ; Specify the nice(2) priority to apply to the worker process (only if set).
 ; The value can vary from -19 (highest priority) to 20 (lower priority).
 ; Default value: not set.
-{% if pool.processes is defined %}
-    {% if pool.processes.priority is defined %}
-        processes.priority = {{ pool.processes.priority}}    
-    {% endif %}
+{% if pool.processes is defined and pool.processes.priority is defined %}
+    processes.priority = {{- pool.processes.priority -}}    
 {% endif %}
 
 
