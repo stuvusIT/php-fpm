@@ -6,7 +6,7 @@
 ; The address on which to accept FastCGI requests.
 ; Valid syntaxes are: 'ip.add.re.ss:port', 'port', '/path/to/unix/socket'.
 ; This option is mandatory for each pool.
-listen = {{ listen | mandatory }}
+listen = {{- pool.listen | mandatory -}}
 
 ; Set listen(2) backlog.
 ; A value of '-1' means unlimited.
@@ -14,7 +14,7 @@ listen = {{ listen | mandatory }}
 {% if pool.listen.backlog is defined %}
     listen.backlog = {{- pool.listen.backlog -}}   
 {% else %}
-    listen.backlog = {{- listen.backlog -}}
+    listen.backlog = {{- listen_backlog -}}
 {% endif %}
 
 
@@ -28,7 +28,7 @@ listen = {{ listen | mandatory }}
 {% if pool.listen.allowed_clients is defined %}
     listen.allowed_clients = {{- pool.listen.allowed_clients -}}    
 {% else %}
-    listen.allowed_clients = {{- allowed_clients }}
+    listen.allowed_clients = {{- listen_allowed_clients }}
 {% endif %}
 
 
@@ -38,16 +38,16 @@ listen = {{ listen | mandatory }}
 ; Many BSD-derived systems allow connections regardless of permissions.
 ; Default values: user and group are set as the running user, mode is set to 0660.
 {% if pool.listen.owner is defined%}
-    listen.owner = pool.listen.owner
+    listen.owner = {{- pool.listen.owner -}}
 {% endif %}
 
 ; See listen.owner
 {% if pool.listen.group is defined %}
-    listen.group = pool.listen.group
+    listen.group = {{- pool.listen.group -}}
 {% endif %}
 
 ; See listen.owner
-listen.mode = {{ pool.listen.mode | default(listen.mode)}}
+listen.mode = {{- pool.listen.mode | default(listen_mode) -}}
 
 ; When POSIX Access Control Lists are supported you can set them using this option. 
 ; When set, listen.owner and listen.group are ignored.
@@ -67,7 +67,7 @@ user = {{ user | mandatory }}
 
 ; Unix group of FPM processes. If not set, the default user's group is used.
 {% if group is defined %}
-    group = pool.group
+    group = {{- pool.group -}}
 {% endif %}
 
 ; Choose how the process manager will control the number of child processes. 
@@ -89,7 +89,7 @@ pm.max_children = {{ pool.pm.max_children | mandatory }}
 {% if pool.pm.start_servers is defined %}
     pm.start_servers = {{- pool.pm.start_servers -}}
 {% else %}    
-    pm.start_servers = {{- pm.start_servers  -}}
+    pm.start_servers = {{- pm_start_servers  -}}
 {% endif %}
 
 
@@ -114,7 +114,7 @@ pm.max_children = {{ pool.pm.max_children | mandatory }}
 {% if pool.pm.process_idle_timeout is defined %}
     pm.process_idle_timeout = {{- pool.pm.process_idle_timeout -}}    
 {% else %}
-    pm.process_idle_timeout = {{- pm.process_idle_timeout -}}
+    pm.process_idle_timeout = {{- pm_process_idle_timeout -}}
 {% endif %}
 
 
@@ -123,7 +123,7 @@ pm.max_children = {{ pool.pm.max_children | mandatory }}
 ; For endless request processing specify '0'.
 ; Equivalent to PHP_FCGI_MAX_REQUESTS.
 ; Default value: 0.
-pm.max_requests = {{ pool.pm.max_requests | default(pm.max_requests)}}
+pm.max_requests = {{ pool.pm.max_requests | default(pm_max_requests)}}
 
 ; The URI to view the FPM status page.
 ; If this value is not set, no URI will be recognized as a status page.
@@ -146,15 +146,18 @@ pm.max_requests = {{ pool.pm.max_requests | default(pm.max_requests)}}
 {% if pool.ping.response is defined %}
     ping.response = {{ pool.ping.response }}
 {% else %}
-    ping.response = {{ ping.response }}
+    ping.response = {{ ping_response }}
 {% endif %}
 
 ; Specify the nice(2) priority to apply to the worker process (only if set).
 ; The value can vary from -19 (highest priority) to 20 (lower priority).
 ; Default value: not set.
-{% if pool.processes.priority is defined %}
-    processes.priority = {{ pool.processes.priority}}    
+{% if pool.processes is defined %}
+    {% if pool.processes.priority is defined %}
+        processes.priority = {{ pool.processes.priority}}    
+    {% endif %}
 {% endif %}
+
 
 ; Specify prefix for path evaluation
 {% if pool.prefix is defined %}
@@ -186,9 +189,9 @@ pm.max_requests = {{ pool.pm.max_requests | default(pm.max_requests)}}
 ; The log file for slow requests. 
 ; Default value: #INSTALL_PREFIX#/log/php-fpm.log.slow.
 {% if pool.slowlog %}
-    slowlog = pool.slowlog
+    slowlog = {{- pool.slowlog -}}
 {% else %}
-    slowlog = slowlog
+    slowlog = {{- slowlog -}}
 {% endif %}
 
 ; Set open file descriptor rlimit for child processes in this pool.
@@ -209,14 +212,14 @@ pm.max_requests = {{ pool.pm.max_requests | default(pm.max_requests)}}
 ; This value must be defined as an absolute path.
 ; When this value is not set, chroot is not used.
 {% if pool.chroot is defined %}
-    chroot = pool.chroot
+    chroot = {{- pool.chroot -}}
 {% endif %}
 
 ; Chdir to this directory at the start.
 ; This value must be an absolute path.
 ; Default value: current directory or / when chroot.
 {% if pool.chdir is defined %}
-    chdir = {{ pool.chdir }}
+    chdir = {{- pool.chdir -}}
 {% endif %}
 
 ; Redirect worker stdout and stderr into main error log.
@@ -234,9 +237,9 @@ pm.max_requests = {{ pool.pm.max_requests | default(pm.max_requests)}}
 ; by clearing the environment in workers before env vars specified in this pool configuration are added.
 ; Since PHP 5.4.27, 5.5.11, and 5.6.0. Default value: Yes.
 {% if pool.clear_env is defined %}
-    clear_env = pool.clear_env
+    clear_env = {{- pool.clear_env -}}
 {% else %}
-    clear_env = clear_env
+    clear_env = {{- clear_env -}}
 {% endif %}
 
 ; Limits the extensions of the main script FPM will allow to parse.
@@ -245,9 +248,9 @@ pm.max_requests = {{ pool.pm.max_requests | default(pm.max_requests)}}
 ; users to use other extensions to execute php code.
 ; Default value: .php .phar
 {% if pool.security.limit_extensions is defined %}
-    security.limit_extensions = pool.security.limit_extensions
+    security.limit_extensions = {{- pool.security.limit_extensions -}}
 {% else %}
-    security.limit_extensions = security.limit_extensions
+    security.limit_extensions = {{- security_limit_extensions -}}
 {% endif %}
 
 ; The access log file. Default value: not set
@@ -259,5 +262,5 @@ pm.max_requests = {{ pool.pm.max_requests | default(pm.max_requests)}}
 {% if pool.access.format is defined %}
     access.format = {{ pool.access.format }}
 {% else %}
-    access.format = {{ access.format }}
+    access.format = {{ access_format }}
 {% endif %}

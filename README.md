@@ -18,6 +18,7 @@ To see all vars possible for php.ini see
 [php.ini page](https://secure.php.net/manual/de/ini.list.php)
 
 For a domain
+
 | Name                      | Required                 | Description       | 
 |---------------------------|:------------------------:|---------------|
 | `name`          | :heavy_check_mark:       | Name of the pool         |
@@ -42,8 +43,7 @@ pools:
     pm.max_children = 20
 php_ini_values:
   apc.enabled: 1
-fpm_conf:
-  log_level: error
+log_level: error
 ```
 
 
