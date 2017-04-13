@@ -17,8 +17,7 @@
     path: /etc/php/{{ php_version }}/php.ini
     marker: "; {mark} ANSIBLE MANAGED BLOCK"
     backup: yes
-    block: |
-      {{ item.name}} {{ item.value }}
+    block: {{ item.name}} {{ item.value }}
   with_items: "{{ php_ini_values }}"
 
 - name: Create php-fpm.conf
