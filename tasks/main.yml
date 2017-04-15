@@ -19,7 +19,9 @@
     backup: yes
     block: |
      {% for key in php_ini_values.keys() %}
-      {{ key }}={{ php_ini_values[key]}}
+      {% for value in php_ini_values[key]%}
+        {{ key }}={{ value }}
+      {% endfor %} 
      {% endfor %}
   register: reload_php
 

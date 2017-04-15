@@ -42,7 +42,8 @@ pools:
     pm: static
     pm.max_children = 20
 php_ini_values:
-  apc.enabled: 1
+  apc.enabled:
+    - 1
 log_level: error
 ```
 
