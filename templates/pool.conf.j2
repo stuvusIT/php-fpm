@@ -26,6 +26,7 @@ listen = {{ pool.listen | mandatory }}
 ; Each address must be separated by a comma.
 ; If this value is left blank, connections will be accepted from any ip address.
 ; Default value: any. IPv6 addresses are allowed since PHP 5.5.20 and 5.6.4.
+
 {% if pool.listen_allowed_clients is defined %}
     listen.allowed_clients = {{ pool.listen_allowed_clients }}    
 {% else %}
@@ -135,6 +136,7 @@ pm.max_requests = {{ pool.pm_max_requests | default(pm_max_requests)}}
 ; If this value is not set, no URI will be recognized as a ping page.
 ; This could be used to test from outside that FPM is alive and responding.
 ; Please note that the value must start with a leading slash (/).
+
 {% if pool.ping_path is defined %}
     ping.path = {{ pool.ping_path }}
 {% endif %}
