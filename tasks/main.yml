@@ -1,10 +1,8 @@
 ---
 - name: Update repositories cache and install "php-fpm" package
   apt:
-    name: "{{ item }}"
+    name: php-fpm
     update_cache: yes
-  with_items:
-    - php-fpm
   when: ansible_pkg_mgr == "apt"
 
 - name: delete default php-fpm pool.conf
@@ -12,7 +10,7 @@
     path: "/etc/php/{{ php_version }}/fpm/pool.d/www.conf"
     state: absent
 
-- name: "Update php.ini"
+- name: Update php.ini
   blockinfile:
     path: "/etc/php/{{ php_version }}/fpm/php.ini"
     marker: "; {mark} ANSIBLE MANAGED BLOCK"

@@ -1,4 +1,4 @@
-;# {{ ansible_managed }}
+; {{ ansible_managed }}
 ;;;;;;;;;;;;;;;;;;;;;;
 ; Pool Configuration ;
 ;;;;;;;;;;;;;;;;;;;;;;
@@ -187,11 +187,7 @@ pm.max_requests = {{ pool.pm_max_requests | default(pm_max_requests)}}
 
 ; The log file for slow requests. 
 ; Default value: #INSTALL_PREFIX#/log/php-fpm.log.slow.
-{% if pool.slowlog is defined %}
-    slowlog = {{ pool.slowlog }}
-{% else %}
-    slowlog = {{ slowlog }}
-{% endif %}
+slowlog = {{ pool.slowlog | default(slowlog) }}
 
 ; Set open file descriptor rlimit for child processes in this pool.
 ; Default value: system defined value.
