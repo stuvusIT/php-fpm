@@ -1,4 +1,4 @@
-# {{ ansible_managed }}
+;# {{ ansible_managed }}
 ;;;;;;;;;;;;;;;;;;;;;
 ; FPM Configuration ;
 ;;;;;;;;;;;;;;;;;;;;;
@@ -13,10 +13,7 @@
 ; Relative path can also be used. They will be prefixed by:
 ;  - the global prefix if it's been set (-p arguement)
 ;  - /usr otherwise
-{% if include %}
-    include= {{ include }}
-{% endif %}
-
+include = /etc/php/{{php_version}}/fpm/conf.d/*.conf
 ;;;;;;;;;;;;;;;;;;
 ; Global Options ;
 ;;;;;;;;;;;;;;;;;;
@@ -102,8 +99,8 @@ rlimit_core = {{ rlimit_core}}
 ; Specify the event mechanism FPM will use.
 ; The following is available: select, pool, epoll, kqueue (*BSD), port (Solaris).
 ; Default value: not set (auto detection).
-{% if events.mechanism is defined %}
-    events.mechanism = {{ events.mechanism }}
+{% if events_mechanism is defined %}
+    events.mechanism = {{ events_mechanism }}
 {% endif %}
 
 ; When FPM is build with systemd integration, 
@@ -123,4 +120,4 @@ systemd_interval = {{ systemd_interval }}
 
 ; To configure the pools it is recommended to have one .conf file per
 ; pool in the following directory:
-include={{ include_pools }}
+include= /etc/php/{{php_version}}/fpm/pool.d/*.conf
