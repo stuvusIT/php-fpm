@@ -40,13 +40,19 @@ pools:
     listen: /path/to/unix/socket
     user: www-data
     pm: static
-    pm.max_children = 20
-php_ini_values:
-  apc.enabled: 1
+    pm_max_children: 20
+    pm_start_servers: 20
+    processes_priority: -19
+php_ini_values: 
+  apc.enabled:
+    - 1
+  extension:
+    - php_mysqli.dll
+    - php_ldap.dll
 log_level: error
 ```
 
-
+php_ini_values are all treated as a list since ansible can not differniate between types
 ### Result
 
 A running php-fpm instance
