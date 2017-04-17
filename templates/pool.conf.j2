@@ -89,7 +89,7 @@ pm.max_children = {{ pool.pm_max_children | mandatory }}
 ; Used only when pm is set to dynamic.
 ; Default Value: min_spare_servers + (max_spare_servers - min_spare_servers) / 2.
 {% if pool.pm.start_servers is defined %}
-    pm.start_servers = {{ pool.pm.start_servers }}
+    pm.start_servers = {{ pool.pm_start_servers }}
 {% endif %}
 
 
