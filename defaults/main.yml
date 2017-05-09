@@ -27,4 +27,5 @@ clear_env: Yes
 security_limit_extensions: .php .phar
 access_format: "%R - %u %t \"%m %r\" %s"
 php_ini_values:
-  expose_php: 0
+  expose_php:
+    - 0
