@@ -154,7 +154,7 @@ pm.max_requests = {{ pool.pm_max_requests | default(pm_max_requests)}}
 ; The value can vary from -19 (highest priority) to 20 (lower priority).
 ; Default value: not set.
 {% if pool.processes_priority is defined %}
-    processes.priority = {{ pool.processes_priority }}    
+    process.priority = {{ pool.processes_priority }}    
 {% endif %}
 
 
@@ -258,4 +258,9 @@ slowlog = {{ pool.slowlog | default(slowlog) }}
     access.format = {{ pool.access_format }}
 {% else %}
     access.format = {{ access_format }}
+{% endif %}
+{% if pool.envs is defined %}
+{% for key in pool.envs.keys() %}
+    env[{{ key }}] = {{  pool.envs[key] }}
+{% endfor %}    
 {% endif %}
