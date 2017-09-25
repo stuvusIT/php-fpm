@@ -27,6 +27,7 @@ listen = {{ php_fpm_pool.listen | mandatory }}
 ; If this value is left blank, connections will be accepted from any ip address.
 ; Default value: any. IPv6 addresses are allowed since PHP 5.5.20 and 5.6.4.
 
+
 {% if php_fpm_pool.listen_allowed_clients is defined %}
     listen.allowed_clients = {{ php_fpm_pool.listen_allowed_clients }}    
 {% else %}
@@ -39,6 +40,7 @@ listen = {{ php_fpm_pool.listen | mandatory }}
 ; connections from a web server.
 ; Many BSD-derived systems allow connections regardless of permissions.
 ; Default values: user and group are set as the running user, mode is set to 0660.
+
 {% if php_fpm_pool.listen_owner is defined%}
     listen.owner = {{ php_fpm_pool.listen_owner }}
 {% endif %}
@@ -91,7 +93,6 @@ pm.max_children = {{php_fpm_pool.pm_max_children}}
 pm.max_children = {{ php_fpm_pool.pm_max_children | mandatory }}
 {% endif %}
 
-
 ; The number of child processes created on startup.
 ; Used only when pm is set to dynamic.
 ; Default Value: min_spare_servers + (max_spare_servers - min_spare_servers) / 2.
@@ -135,6 +136,7 @@ pm.max_requests = {{ php_fpm_pool.pm_max_requests | default(php_fpm_pm_max_reque
 ; The URI to view the FPM status page.
 ; If this value is not set, no URI will be recognized as a status page.
 ; Default value: none.
+
 {% if php_fpm_pool.pm_status_path is defined %}
     pm.status_path = {{ php_fpm_pool.pm_status_path }}    
 {% endif %}
@@ -143,6 +145,7 @@ pm.max_requests = {{ php_fpm_pool.pm_max_requests | default(php_fpm_pm_max_reque
 ; If this value is not set, no URI will be recognized as a ping page.
 ; This could be used to test from outside that FPM is alive and responding.
 ; Please note that the value must start with a leading slash (/).
+
 
 {% if php_fpm_pool.ping_path is defined %}
     ping.path = {{ php_fpm_pool.ping_path }}
@@ -249,6 +252,7 @@ slowlog = {{ php_fpm_pool.slowlog | default(php_fpm_slowlog) }}
 ; You should only limit FPM to .php extensions to prevent malicious
 ; users to use other extensions to execute php code.
 ; Default value: .php .phar
+
 {% if php_fpm_pool.security_limit_extensions is defined %}
     security.limit_extensions = {{ php_fpm_pool.security_limit_extensions }}
 {% else %}

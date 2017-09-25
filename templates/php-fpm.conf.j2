@@ -1,4 +1,4 @@
-; {{ php_fpm_ansible_managed }}
+; {{ ansible_managed }}
 ;;;;;;;;;;;;;;;;;;;;;
 ; FPM Configuration ;
 ;;;;;;;;;;;;;;;;;;;;;
@@ -98,7 +98,6 @@ rlimit_core = {{ php_fpm_rlimit_core}}
 
 ; Specify the event mechanism FPM will use.
 ; The following is available: select, pool, epoll, kqueue (*BSD), port (Solaris).
-; Default value: not set (auto detection).
 {% if php_fpm_events_mechanism is defined %}
     events.mechanism = {{ php_fpm_events_mechanism }}
 {% endif %}
