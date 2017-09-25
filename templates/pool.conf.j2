@@ -83,7 +83,14 @@ pm = {{ pool.pm | mandatory }}
 ; This option is mandatory.
 ; This option sets the limit on the number of simultaneous requests that will be served. 
 ; Equivalent to the ApacheMaxClients directive with mpm_prefork and to the PHP_FCGI_CHILDREN environment variable in the original PHP FastCGI.
+{% if pool.pm == "ondemand"%}
+{% if pool.pm_max_children is defined %}
+pm.max_children = {{pool.pm_max_children}}    
+{% endif %}
+{% else %}
 pm.max_children = {{ pool.pm_max_children | mandatory }}
+{% endif %}
+
 
 ; The number of child processes created on startup.
 ; Used only when pm is set to dynamic.
