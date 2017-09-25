@@ -38,7 +38,7 @@
   template:
     src: templates/pool.conf.j2
     dest:  "/etc/php/{{ php_version }}/fpm/pool.d/{{ pool.name }}.conf"
-  with_items: "{{ pools }}"
+  with_items: "{{ php_fpm_pools }}"
   loop_control:
     loop_var: pool
   register: reload_php
