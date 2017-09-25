@@ -11,7 +11,7 @@ This role needs systemd and an apt based package manager.
 ## Role Variables
 
 To see all vars possible for php-fpm see 
-[php-fpm config page](https://secure.php.net/manual/en/install.fpm.configuration.php)
+[php-fpm config page](https://secure.php.net/manual/en/install.fpm.configuration.php). To use them prefix them with php_fpm_ (but not the pool variables)
 
 
 To see all vars possible for php.ini see
@@ -35,7 +35,7 @@ For a domain
 ### Vars
 
 ```yml
-pools:
+php_fpm_pools:
   - name: fpm-host
     listen: /path/to/unix/socket
     user: www-data
@@ -43,13 +43,13 @@ pools:
     pm_max_children: 20
     pm_start_servers: 20
     processes_priority: -19
-php_ini_values: 
+php_fpm_php_ini_values: 
   apc.enabled:
     - 1
   extension:
     - php_mysqli.dll
     - php_ldap.dll
-log_level: error
+php_fpm_log_level: error
 ```
 
 php_ini_values are all treated as a list since ansible can not differniate between types
