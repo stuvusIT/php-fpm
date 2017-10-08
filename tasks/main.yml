@@ -11,16 +11,13 @@
     state: absent
 
 - name: Update php.ini
-  blockinfile:
+  ini_file:
     path: "/etc/php/{{ php_fpm_php_version }}/fpm/php.ini"
-    marker: "; {mark} ANSIBLE MANAGED BLOCK"
-    backup: yes
-    block: |
-     {% for key in php_fpm_php_ini_values.keys() %}
-      {% for value in php_fpm_php_ini_values[key]%}
-        {{ key }}={{ value }}
-      {% endfor %} 
-     {% endfor %}
+    section: "{{ item.section }}"
+    option: "{{ item.option }}"
+    value: "{{ item.value}}"
+  with_items:
+    php_fpm_php_ini_values
   register: reload_php
 
 - name: Create php-fpm.conf
