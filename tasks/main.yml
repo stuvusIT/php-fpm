@@ -5,7 +5,7 @@
     update_cache: yes
   when: ansible_pkg_mgr == "apt"
 
-- name: delete default php-fpm pool.conf
+- name: Delete default php-fpm pool.conf
   file:
     path: "/etc/php/{{ php_fpm_php_version }}/fpm/pool.d/www.conf"
     state: absent
