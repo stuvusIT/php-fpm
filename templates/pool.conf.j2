@@ -13,7 +13,7 @@ listen = {{ php_fpm_pool.listen | mandatory }}
 ; A value of '-1' means unlimited.
 ; Default value: -1.
 {% if php_fpm_pool.listen_backlog is defined %}
-    listen.backlog = {{ php_fpm_pool.listen_backlog }}   
+    listen.backlog = {{ php_fpm_pool.listen_backlog }}
 {% else %}
     listen.backlog = {{ php_fpm_listen_backlog }}
 {% endif %}
@@ -28,7 +28,7 @@ listen = {{ php_fpm_pool.listen | mandatory }}
 ; Default value: any. IPv6 addresses are allowed since PHP 5.5.20 and 5.6.4.
 
 {% if php_fpm_pool.listen_allowed_clients is defined %}
-    listen.allowed_clients = {{ php_fpm_pool.listen_allowed_clients }}    
+    listen.allowed_clients = {{ php_fpm_pool.listen_allowed_clients }}
 {% else %}
     listen.allowed_clients = {{ php_fpm_listen_allowed_clients }}
 {% endif %}
@@ -51,14 +51,14 @@ listen = {{ php_fpm_pool.listen | mandatory }}
 ; See listen.owner
 listen.mode = {{ php_fpm_pool.listen_mode | default(php_fpm_listen_mode) }}
 
-; When POSIX Access Control Lists are supported you can set them using this option. 
+; When POSIX Access Control Lists are supported you can set them using this option.
 ; When set, listen.owner and listen.group are ignored.
 ; Value is a comma separated list of user names. Since PHP 5.6.5.
 {% if php_fpm_pool.listen_acl_users is defined %}
     listen.acl_users = {{ php_fpm_pool.listen_acl_users }}
 {% endif %}
 
-; See listen.acl_users. 
+; See listen.acl_users.
 ; Value is a comma separated list of group names. Since PHP 5.6.5.
 {% if php_fpm_pool.listen_acl_groups is defined %}
     listen.acl_groups = {{ php_fpm_pool.listen_acl_groups }}
@@ -72,20 +72,20 @@ user = {{ php_fpm_pool.user | mandatory }}
     group = {{ php_fpm_pool.group }}
 {% endif %}
 
-; Choose how the process manager will control the number of child processes. 
+; Choose how the process manager will control the number of child processes.
 ; Possible values: static, ondemand, dynamic. This option is mandatory.
 ; static - the number of child processes is fixed (pm.max_children).
 ; ondemand - the processes spawn on demand (when requested, as opposed to dynamic, where pm.start_servers are started when the service is started.
 ; dynamic - the number of child processes is set dynamically based on the following directives: pm.max_children, pm.start_servers, pm.min_spare_servers, pm.max_spare_servers.
 pm = {{ php_fpm_pool.pm | mandatory }}
 
-; The number of child processes to be created when pm is set to static and the maximum number of child processes to be created when pm is set to dynamic. 
+; The number of child processes to be created when pm is set to static and the maximum number of child processes to be created when pm is set to dynamic.
 ; This option is mandatory.
-; This option sets the limit on the number of simultaneous requests that will be served. 
+; This option sets the limit on the number of simultaneous requests that will be served.
 ; Equivalent to the ApacheMaxClients directive with mpm_prefork and to the PHP_FCGI_CHILDREN environment variable in the original PHP FastCGI.
 {% if php_fpm_pool.pm == "ondemand"%}
 {% if php_fpm_pool.pm_max_children is defined %}
-pm.max_children = {{php_fpm_pool.pm_max_children}}    
+pm.max_children = {{php_fpm_pool.pm_max_children}}
 {% endif %}
 {% else %}
 pm.max_children = {{ php_fpm_pool.pm_max_children | mandatory }}
@@ -119,7 +119,7 @@ pm.max_children = {{ php_fpm_pool.pm_max_children | mandatory }}
 ; Available units: s(econds)(default), m(inutes), h(ours), or d(ays).
 ; Default value: 10s.
 {% if php_fpm_pool.pm_process_idle_timeout is defined %}
-    pm.process_idle_timeout = {{ php_fpm_pool.pm_process_idle_timeout }}    
+    pm.process_idle_timeout = {{ php_fpm_pool.pm_process_idle_timeout }}
 {% else %}
     pm.process_idle_timeout = {{ php_fpm_pm_process_idle_timeout }}
 {% endif %}
@@ -136,7 +136,7 @@ pm.max_requests = {{ php_fpm_pool.pm_max_requests | default(php_fpm_pm_max_reque
 ; If this value is not set, no URI will be recognized as a status page.
 ; Default value: none.
 {% if php_fpm_pool.pm_status_path is defined %}
-    pm.status_path = {{ php_fpm_pool.pm_status_path }}    
+    pm.status_path = {{ php_fpm_pool.pm_status_path }}
 {% endif %}
 
 ; The ping URI to call the monitoring page of FPM.
@@ -161,7 +161,7 @@ pm.max_requests = {{ php_fpm_pool.pm_max_requests | default(php_fpm_pm_max_reque
 ; The value can vary from -19 (highest priority) to 20 (lower priority).
 ; Default value: not set.
 {% if php_fpm_pool.processes_priority is defined %}
-    process.priority = {{ php_fpm_pool.processes_priority }}    
+    process.priority = {{ php_fpm_pool.processes_priority }}
 {% endif %}
 
 
@@ -182,8 +182,8 @@ pm.max_requests = {{ php_fpm_pool.pm_max_requests | default(php_fpm_pm_max_reque
 {% endif %}
 
 
-; The timeout for serving a single request after which a PHP backtrace will be dumped to the 'slowlog' file. 
-; A value of '0' means 'Off'. 
+; The timeout for serving a single request after which a PHP backtrace will be dumped to the 'slowlog' file.
+; A value of '0' means 'Off'.
 ; Available units: s(econds)(default), m(inutes), h(ours), or d(ays).
 ; Default value: 0.
 {% if php_fpm_pool.request_slowlog_timeout is defined %}
@@ -192,14 +192,14 @@ pm.max_requests = {{ php_fpm_pool.pm_max_requests | default(php_fpm_pm_max_reque
     request_slowlog_timeout = {{ php_fpm_request_slowlog_timeout}}
 {% endif %}
 
-; The log file for slow requests. 
+; The log file for slow requests.
 ; Default value: #INSTALL_PREFIX#/log/php-fpm.log.slow.
 slowlog = {{ php_fpm_pool.slowlog | default(php_fpm_slowlog) }}
 
 ; Set open file descriptor rlimit for child processes in this pool.
 ; Default value: system defined value.
 {% if php_fpm_pool.rlimit_files is defined %}
-    rlimit_files = {{ php_fpm_pool.rlimit_files }}    
+    rlimit_files = {{ php_fpm_pool.rlimit_files }}
 {% endif %}
 
 ; limit_core int
@@ -269,5 +269,5 @@ slowlog = {{ php_fpm_pool.slowlog | default(php_fpm_slowlog) }}
 {% if php_fpm_pool.envs is defined %}
 {% for key in php_fpm_pool.envs.keys() %}
     env[{{ key }}] = {{  php_fpm_pool.envs[key] }}
-{% endfor %}    
+{% endfor %}
 {% endif %}
