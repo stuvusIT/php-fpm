@@ -1,8 +1,13 @@
 ---
-- name: Update repositories cache and install "php-fpm" package
+- name: Update repositories cache
+  apt:
+    update_cache: yes
+  changed_when: false
+  when: ansible_pkg_mgr == "apt"
+  
+- name: Install "php" package
   apt:
     name: php-fpm
-    update_cache: yes
   when: ansible_pkg_mgr == "apt"
 
 - name: Delete default php-fpm pool.conf

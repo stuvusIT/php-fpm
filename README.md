@@ -11,7 +11,7 @@ This role needs systemd and an apt based package manager.
 ## Role Variables
 
 To see all vars possible for php-fpm see 
-[php-fpm config page](https://secure.php.net/manual/en/install.fpm.configuration.php). To use them prefix them with php_fpm_ (but not the pool variables)
+[php-fpm config page](https://secure.php.net/manual/en/install.fpm.configuration.php). To use them prefix them with `php_fpm_` (but not the pool variables)
 
 
 To see all vars possible for php.ini see
@@ -39,6 +39,7 @@ For a domain
 | `user`            |    :heavy_check_mark:    | Unix user of FPM processes. This option is mandatory.                                                                                                                                                               |
 | `pm`              |    :heavy_check_mark:    | Choose how the process manager will control the number of child processes. Possible values: static, ondemand, dynamic. This option is mandatory.                                                                    |
 | `pm.max_children` | :heavy_multiplication_x: | The number of child processes to be created when pm is set to static and the maximum number of child processes to be created when pm is set to dynamic. This option is mandatory if pm is set to dynamic or static. |
+
 
 
 
