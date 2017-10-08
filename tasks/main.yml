@@ -16,8 +16,7 @@
     section: "{{ item.section }}"
     option: "{{ item.option }}"
     value: "{{ item.value}}"
-  with_items:
-    php_fpm_php_ini_values
+  with_items: "{{ php_fpm_php_ini_values }}"
   register: reload_php
 
 - name: Create php-fpm.conf
