@@ -16,6 +16,19 @@ To see all vars possible for php-fpm see
 
 To see all vars possible for php.ini see
 [php.ini page](https://secure.php.net/manual/de/ini.list.php)
+To pass those vars to ansible you use the list
+`php_fpm_php_ini_values` the syntax for this is as follows
+```
+php_fpm_php_ini_values:
+  - section: SECTION NAME
+    option: OPTION NAME
+    value: VALUE
+```
+| Name                      | Required                 | Description       | 
+|---------------------------|:------------------------:|---------------|
+| `section`          | :heavy_check_mark:       | Name from the php ini file section where the variable is supposed to live.        |
+| `option`          | :heavy_check_mark:         | The actuall variable name |
+| `value`          | :heavy_check_mark:         | The value that the option should have|
 
 For a domain
 
