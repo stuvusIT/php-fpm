@@ -10,42 +10,39 @@
     name: php-fpm
   when: ansible_pkg_mgr == "apt"
 
-- name: delete default php-fpm pool.conf
+- name: Delete default php-fpm pool.conf
   file:
-    path: "/etc/php/{{ php_version }}/fpm/pool.d/www.conf"
+    path: "/etc/php/{{ php_fpm_php_version }}/fpm/pool.d/www.conf"
     state: absent
 
 - name: Update php.ini
-  blockinfile:
-    path: "/etc/php/{{ php_version }}/fpm/php.ini"
-    marker: "; {mark} ANSIBLE MANAGED BLOCK"
-    backup: yes
-    block: |
-     {% for key in php_ini_values.keys() %}
-      {% for value in php_ini_values[key]%}
-        {{ key }}={{ value }}
-      {% endfor %} 
-     {% endfor %}
+  ini_file:
+    path: "/etc/php/{{ php_fpm_php_version }}/fpm/php.ini"
+    section: "{{ item.section }}"
+    option: "{{ item.option }}"
+    value: "{{ item.value}}"
+  with_items:
+    php_fpm_php_ini_values
   register: reload_php
 
 - name: Create php-fpm.conf
   template:
     src: templates/php-fpm.conf.j2
-    dest: "/etc/php/{{ php_version }}/fpm/php-fpm.conf"
+    dest: "/etc/php/{{ php_fpm_php_version }}/fpm/php-fpm.conf"
   register: reload_php
 
 - name: Create php-fpm pool.confs
   template:
     src: templates/pool.conf.j2
-    dest:  "/etc/php/{{ php_version }}/fpm/pool.d/{{ pool.name }}.conf"
+    dest:  "/etc/php/{{ php_fpm_php_version }}/fpm/pool.d/{{ php_fpm_pool.name }}.conf"
   with_items: "{{ php_fpm_pools }}"
   loop_control:
-    loop_var: pool
+    loop_var: php_fpm_pool
   register: reload_php
 
 - name: Enable and start php-fpm
   systemd:
-    name: "php{{ php_version }}-fpm.service"
+    name: "php{{ php_fpm_php_version }}-fpm.service"
     state: reloaded
     enabled: True
   when: ansible_service_mgr == "systemd" and reload_php.changed

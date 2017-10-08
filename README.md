@@ -43,12 +43,16 @@ php_fpm_pools:
     pm_max_children: 20
     pm_start_servers: 20
     processes_priority: -19
-php_fpm_php_ini_values: 
-  apc.enabled:
-    - 1
-  extension:
-    - php_mysqli.dll
-    - php_ldap.dll
+php_fpm_php_ini_values:
+  - section: APC
+    option: apc.enabled
+    value: 1
+  - section: PHP
+    option: extension
+    value: php_mysqli
+  - section: PHP
+    option: extension
+    value: php_ldap
 php_fpm_log_level: error
 ```
 
