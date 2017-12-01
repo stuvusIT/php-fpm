@@ -24,7 +24,7 @@ php_fpm_php_ini_values:
     option: OPTION NAME
     value: VALUE
 ```
-| Name      |      Required      | Description                                                                |
+| Name      | Required           | Description                                                                |
 |:----------|:------------------:|:---------------------------------------------------------------------------|
 | `section` | :heavy_check_mark: | Name from the php ini file section where the variable is supposed to live. |
 | `option`  | :heavy_check_mark: | The actuall variable name                                                  |
