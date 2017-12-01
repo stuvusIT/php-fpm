@@ -13,7 +13,7 @@
 ; Relative path can also be used. They will be prefixed by:
 ;  - the global prefix if it's been set (-p arguement)
 ;  - /usr otherwise
-include = /etc/php/{{php_version}}/fpm/conf.d/*.conf
+include = /etc/php/{{php_fpm_php_version}}/fpm/conf.d/*.conf
 ;;;;;;;;;;;;;;;;;;
 ; Global Options ;
 ;;;;;;;;;;;;;;;;;;
@@ -120,4 +120,4 @@ systemd_interval = {{ php_fpm_systemd_interval }}
 
 ; To configure the pools it is recommended to have one .conf file per
 ; pool in the following directory:
-include= /etc/php/{{php_version}}/fpm/pool.d/*.conf
+include= /etc/php/{{php_fpm_php_version}}/fpm/pool.d/*.conf
