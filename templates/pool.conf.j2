@@ -70,7 +70,7 @@ listen.mode = {{ php_fpm_pool.listen_mode | default(php_fpm_listen_mode) }}
 user = {{ php_fpm_pool.user | mandatory }}
 
 ; Unix group of FPM processes. If not set, the default user's group is used.
-{% if group is defined %}
+{% if php_fpm_pool.group is defined %}
     group = {{ php_fpm_pool.group }}
 {% endif %}
 
