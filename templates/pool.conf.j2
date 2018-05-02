@@ -7,7 +7,7 @@
 ; The address on which to accept FastCGI requests.
 ; Valid syntaxes are: 'ip.add.re.ss:port', 'port', '/path/to/unix/socket'.
 ; This option is mandatory for each pool.
-listen = {{ php_fpm_pool.listen | mandatory }}
+listen = {{ php_fpm_pool.listen }}
 
 ; Set listen(2) backlog.
 ; A value of '-1' means unlimited.
@@ -67,7 +67,7 @@ listen.mode = {{ php_fpm_pool.listen_mode | default(php_fpm_listen_mode) }}
 {% endif %}
 
 ; Unix user of FPM processes. This option is mandatory.
-user = {{ php_fpm_pool.user | mandatory }}
+user = {{ php_fpm_pool.user }}
 
 ; Unix group of FPM processes. If not set, the default user's group is used.
 {% if php_fpm_pool.group is defined %}
@@ -79,7 +79,7 @@ user = {{ php_fpm_pool.user | mandatory }}
 ; static - the number of child processes is fixed (pm.max_children).
 ; ondemand - the processes spawn on demand (when requested, as opposed to dynamic, where pm.start_servers are started when the service is started.
 ; dynamic - the number of child processes is set dynamically based on the following directives: pm.max_children, pm.start_servers, pm.min_spare_servers, pm.max_spare_servers.
-pm = {{ php_fpm_pool.pm | mandatory }}
+pm = {{ php_fpm_pool.pm }}
 
 ; The number of child processes to be created when pm is set to static and the maximum number of child processes to be created when pm is set to dynamic.
 ; This option is mandatory.
@@ -90,7 +90,7 @@ pm = {{ php_fpm_pool.pm | mandatory }}
 pm.max_children = {{php_fpm_pool.pm_max_children}}
 {% endif %}
 {% else %}
-pm.max_children = {{ php_fpm_pool.pm_max_children | mandatory }}
+pm.max_children = {{ php_fpm_pool.pm_max_children }}
 {% endif %}
 
 ; The number of child processes created on startup.
@@ -105,14 +105,14 @@ pm.max_children = {{ php_fpm_pool.pm_max_children | mandatory }}
 ; Used only when pm is set to dynamic.
 ; Also mandatory in this case.
 {% if php_fpm_pool.pm == "dynamic" %}
-    pm.min_spare_servers = {{ php_fpm_pool.pm_min_spare_servers | mandatory}}
+    pm.min_spare_servers = {{ php_fpm_pool.pm_min_spare_servers}}
 {% endif %}
 
 ; The desired maximum number of idle server processes.
 ; Used only when pm is set to dynamic.
 ; Also mandatory in this case.
 {% if php_fpm_pool.pm == "dynamic" %}
-    pm.max_spare_servers = {{ php_fpm_pool.max_spare_servers | mandatory}}
+    pm.max_spare_servers = {{ php_fpm_pool.pm_max_spare_servers}}
 {% endif %}
 
 ; The number of seconds after which an idle process will be killed.
