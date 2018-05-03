@@ -20,14 +20,16 @@ To pass those vars to ansible you use the list
 `php_fpm_php_ini_values` the syntax for this is as follows
 ```
 php_fpm_php_ini_values:
-  - section: SECTION NAME
-    option: OPTION NAME
-    value: VALUE
+  SECTION NAME:
+    OPTION NAME:
+      - value1
+      - value2
 ```
+`php_fpm_php_ini_values` is a dict containing the sections as keys. Each section is another dict containing the option value as key. Each option entry is a list containg the values to be written under that section and option. See the example above.
 | Name      | Required           | Description                                                                |
 |:----------|:------------------:|:---------------------------------------------------------------------------|
 | `section` | :heavy_check_mark: | Name from the php ini file section where the variable is supposed to live. |
-| `option`  | :heavy_check_mark: | The actuall variable name                                                  |
+| `option`  | :heavy_check_mark: | The actual variable name                                                   |
 | `value`   | :heavy_check_mark: | The value that the option should have                                      |
 
 For a domain
@@ -58,15 +60,13 @@ php_fpm_pools:
     pm_start_servers: 20
     processes_priority: -19
 php_fpm_php_ini_values:
-  - section: APC
-    option: apc.enabled
-    value: 1
-  - section: PHP
-    option: extension
-    value: php_mysqli
-  - section: PHP
-    option: extension
-    value: php_ldap
+  APC:
+    apc.enabled:
+      - 1
+  PHP:
+    extension
+      - php_mysqli
+      - php_ldap
 php_fpm_log_level: error
 ```
 
