@@ -27,6 +27,6 @@ php_fpm_clear_env: Yes
 php_fpm_security_limit_extensions: .php .phar
 php_fpm_access_format: "%R - %u %t \"%m %r\" %s"
 php_fpm_php_ini_values:
-  - section: PHP
-    option: expose_php
-    value: 0
+  PHP:
+    expose_php:
+      - 0
