@@ -38,7 +38,7 @@ For a domain
 | `listen`          |    :heavy_check_mark:    | The address on which to accept FastCGI requests. Valid syntaxes are: 'ip.add.re.ss:port', 'port', '/path/to/unix/socket'. This option is mandatory for each pool.                                                   |
 | `user`            |    :heavy_check_mark:    | Unix user of FPM processes. This option is mandatory.                                                                                                                                                               |
 | `pm`              |    :heavy_check_mark:    | Choose how the process manager will control the number of child processes. Possible values: static, ondemand, dynamic. This option is mandatory.                                                                    |
-| `pm.max_children` | :heavy_multiplication_x: | The number of child processes to be created when pm is set to static and the maximum number of child processes to be created when pm is set to dynamic. This option is mandatory if pm is set to dynamic or static. |
+| `pm_max_children` | :heavy_multiplication_x: | The number of child processes to be created when pm is set to static and the maximum number of child processes to be created when pm is set to dynamic. This option is mandatory if pm is set to dynamic or static. |
 
 
 

@@ -16,12 +16,10 @@
     state: absent
 
 - name: Update php.ini
-  ini_file:
-    path: "/etc/php/{{ php_fpm_php_version }}/fpm/php.ini"
-    section: "{{ item.section }}"
-    option: "{{ item.option }}"
-    value: "{{ item.value}}"
-  with_items: "{{ php_fpm_php_ini_values }}"
+  include: update_php_ini.yml
+  with_dict: "{{ php_fpm_php_ini_values }}"
+  loop_control:
+    loop_var: section
   register: reload_php
 
 - name: Create php-fpm.conf

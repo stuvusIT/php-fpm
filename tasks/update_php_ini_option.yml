@@ -1,0 +1,8 @@
+---
+- name : Update php.ini option
+  ini_file:
+    path: "/etc/php/{{ php_fpm_php_version }}/fpm/php.ini"
+    section: "{{ section.key }}"
+    option: "{{ option.key }}"
+    value: "{{ item }}"
+  with_list: "{{ option.value }}"
