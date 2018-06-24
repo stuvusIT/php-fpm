@@ -43,3 +43,9 @@
     state: reloaded
     enabled: True
   when: ansible_service_mgr == "systemd" and reload_php.changed
+
+- name: Disable cron php
+  file:
+    path: "/etc/cron.d/php"
+    state: absent
+  when: php_fpm_disable_cron

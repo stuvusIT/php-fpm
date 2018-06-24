@@ -30,3 +30,4 @@ php_fpm_php_ini_values:
   PHP:
     expose_php:
       - 0
+php_fpm_disable_cron: false

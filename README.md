@@ -7,8 +7,11 @@ This is an ansible role which sets up a php-fpm instance and configures the pool
 
 This role needs systemd and an apt based package manager.
 
-
 ## Role Variables
+
+| Name                   | Required/Default | Description                                          |
+|:-----------------------|:----------------:|:-----------------------------------------------------|
+| `php_fpm_disable_cron` | `false`          | Disable cron script to send emails for php warnings. |
 
 To see all vars possible for php-fpm see 
 [php-fpm config page](https://secure.php.net/manual/en/install.fpm.configuration.php). To use them prefix them with `php_fpm_` (but not the pool variables)
