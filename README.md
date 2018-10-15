@@ -1,11 +1,11 @@
-# Php-FPM Ansible role
+# php-fpm
 
-This is an ansible role which sets up a php-fpm instance and configures the pools.
+This is an Ansible role which sets up a php-fpm instance and configures the pools.
 
 
 ## Requirements
 
-This role needs systemd and an apt based package manager.
+Debian or Ubuntu
 
 ## Role Variables
 
