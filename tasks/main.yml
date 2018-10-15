@@ -1,14 +1,7 @@
 ---
-- name: Update repositories cache
-  apt:
-    update_cache: yes
-  changed_when: false
-  when: ansible_pkg_mgr == "apt"
-  
-- name: Install "php" package
+- name: Install php package
   apt:
     name: php-fpm
-  when: ansible_pkg_mgr == "apt"
 
 - name: Delete default php-fpm pool.conf
   file:
@@ -42,7 +35,7 @@
     name: "php{{ php_fpm_php_version }}-fpm.service"
     state: reloaded
     enabled: True
-  when: ansible_service_mgr == "systemd" and reload_php.changed
+  when: reload_php.changed
 
 - name: Disable cron php
   file:
