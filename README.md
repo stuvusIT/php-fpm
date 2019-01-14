@@ -29,6 +29,7 @@ php_fpm_php_ini_values:
       - value2
 ```
 `php_fpm_php_ini_values` is a dict containing the sections as keys. Each section is another dict containing the option value as key. Each option entry is a list containg the values to be written under that section and option. See the example above.
+
 | Name      | Required           | Description                                                                |
 |:----------|:------------------:|:---------------------------------------------------------------------------|
 | `section` | :heavy_check_mark: | Name from the php ini file section where the variable is supposed to live. |
@@ -44,9 +45,6 @@ For a domain
 | `user`            |    :heavy_check_mark:    | Unix user of FPM processes. This option is mandatory.                                                                                                                                                               |
 | `pm`              |    :heavy_check_mark:    | Choose how the process manager will control the number of child processes. Possible values: static, ondemand, dynamic. This option is mandatory.                                                                    |
 | `pm_max_children` | :heavy_multiplication_x: | The number of child processes to be created when pm is set to static and the maximum number of child processes to be created when pm is set to dynamic. This option is mandatory if pm is set to dynamic or static. |
-
-
-
 
 
 ## Example Playbook
