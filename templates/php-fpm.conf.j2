@@ -3,120 +3,65 @@
 ; FPM Configuration ;
 ;;;;;;;;;;;;;;;;;;;;;
 
-; All relative paths in this configuration file are relative to PHP's install
-; prefix (/usr). This prefix can be dynamicaly changed by using the
-; '-p' argument from the command line.
+include = /etc/php/{{ php_fpm_php_version }}/fpm/conf.d/*.conf
 
-; Include one or more files. If glob(3) exists, it is used to include a bunch of
-; files from a glob(3) pattern. This directive can be used everywhere in the
-; file.
-; Relative path can also be used. They will be prefixed by:
-;  - the global prefix if it's been set (-p arguement)
-;  - /usr otherwise
-include = /etc/php/{{php_fpm_php_version}}/fpm/conf.d/*.conf
 ;;;;;;;;;;;;;;;;;;
 ; Global Options ;
 ;;;;;;;;;;;;;;;;;;
 
 [global]
 ; Pid file
-; Note: the default prefix is /var
-; Default Value: none
-{% if php_fpm_pid is defined %}
-    pid = {{ php_fpm_pid }}
-{% endif %}
-
+pid = {{ php_fpm_pid }}
 
 ; Error log file
-; Note: the default prefix is /var
-; Default Value: log/php-fpm.log
-
 error_log = {{ php_fpm_error_log }}
 
-; Log level
-; Possible Values: alert, error, warning, notice, debug
-; Default Value: notice
+; Log level, possible Values: alert, error, warning, notice, debug
 log_level = {{ php_fpm_log_level }}
 
 ; used to specify what type of program is logging the message.
-; Default value: daemon.
 syslog.facility = {{ php_fpm_syslog_facility }}
 
-; Prepended to every message.
-; If you have multiple FPM instances running on the same server
-; you can change the default value which must suit common needs.
-; Default value: php-fpm.
+; Prepended to every log message.
 syslog.ident = {{ php_fpm_syslog_ident }}
 
-; If this number of child processes exit with SIGSEGV or SIGBUS within the time
-; interval set by emergency_restart_interval then FPM will restart. A value
-; of '0' means 'Off'.
-; Default Value: 0
+; If this number of child processes exit with SIGSEGV or SIGBUS within the time interval set by emergency_restart_interval then FPM will restart
 emergency_restart_threshold = {{ php_fpm_emergency_restart_threshold }}
 
-; Interval of time used by emergency_restart_interval to determine when
-; a graceful restart will be initiated.  This can be useful to work around
-; accidental corruptions in an accelerator's shared memory.
-; Available Units: s(econds), m(inutes), h(ours), or d(ays)
-; Default Unit: seconds
-; Default Value: 0
+; Interval of time used by emergency_restart_interval to determine when a graceful restart will be initiated.
 emergency_restart_interval = {{ php_fpm_emergency_restart_interval }}
 
 ; Time limit for child processes to wait for a reaction on signals from master.
-; Available units: s(econds), m(inutes), h(ours), or d(ays)
-; Default Unit: seconds
-; Default Value: 0
 process_control_timeout = {{ php_fpm_process_control_timeout }}
 
 ; The maximum number of processes FPM will fork.
-; This has been design to control the global number of processes
-; when using dynamic PM within a lot of pools.
-; Use it with caution.
-; Default value: 0.
 process.max = {{ php_fpm_process_max }}
-
-; Specify the nice(2) priority to apply to the master process (only if set).
-; The value can vary from -19 (highest priority) to 20 (lower priority).
-; Default value: not set.
 {% if php_fpm_process_priority  is defined %}
-    process.priority = {{ php_fpm_process_priority }}
+; The nice(2) priority to apply to the master process (only if set).
+process.priority = {{ php_fpm_process_priority }}
+
 {% endif %}
 
-; Send FPM to background. Set to 'no' to keep FPM in foreground for debugging.
-; Default Value: yes
-daemonize = {{ php_fpm_daemonize }}
+daemonize = {% if php_fpm_daemonize %}yes{% else %}no{% endif %}
 
 ;Set open file descriptor rlimit for the master process.
-; Default value: not specifyed in doc
-{% if php_fpm_rlimit_files is defined %}
-    rlimit_files = {{ php_fpm_rlimit_files }}
-{% endif %}
+rlimit_files = {{ php_fpm_rlimit_files }}
 
 ; Set max core size rlimit for the master process.
-; Default value: 0.
 rlimit_core = {{ php_fpm_rlimit_core}}
-
-; Specify the event mechanism FPM will use.
-; The following is available: select, pool, epoll, kqueue (*BSD), port (Solaris).
 {% if php_fpm_events_mechanism is defined %}
-    events.mechanism = {{ php_fpm_events_mechanism }}
+; Specify the event mechanism FPM will use.
+events.mechanism = {{ php_fpm_events_mechanism }}
+
 {% endif %}
 
-; When FPM is build with systemd integration,
-; specify the interval, in second, between health report notification to systemd.
-; Set to 0 to disable
-; Default value: 10.
+; Interval, in seconds, between health report notification to systemd.
 systemd_interval = {{ php_fpm_systemd_interval }}
 
 ;;;;;;;;;;;;;;;;;;;;
 ; Pool Definitions ;
 ;;;;;;;;;;;;;;;;;;;;
 
-; Multiple pools of child processes may be started with different listening
-; ports and different management options.  The name of the pool will be
-; used in logs and stats. There is no limitation on the number of pools which
-; FPM can handle. Your system will tell you anyway :)
-
-; To configure the pools it is recommended to have one .conf file per
-; pool in the following directory:
-include= /etc/php/{{php_fpm_php_version}}/fpm/pool.d/*.conf
+{% for pool in php_fpm_pools %}
+include=/etc/php/{{ php_fpm_php_version }}/fpm/pool.d/{{ pool.name }}.conf
+{% endfor %}
