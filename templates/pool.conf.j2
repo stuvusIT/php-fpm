@@ -135,38 +135,28 @@ security.limit_extensions = {{ php_fpm_pool.security_limit_extensions | default(
 access.log = {{ php_fpm_pool.access_log }}
 access.format = {{ php_fpm_pool.access_format | default(php_fpm_access_format) }}
 {% endif %}
-{% if php_fpm_pool.envs is defined %}
 
 ; Environment variables
-{% for key in php_fpm_pool.envs.keys() %}
-env[{{ key }}] = {{  php_fpm_pool.envs[key] }}
+{% for key, value in ( php_fpm_pool.envs | default({}) ).items() %}
+env[{{ key }}] = {{ value }}
 {% endfor %}
-{% endif %}
-{% if php_fpm_pool.php_flags is defined %}
 
 ; PHP flags
-{% for key in php_fpm_pool.php_flags.keys() %}
-php_flag[{{ key }}] = {% if php_fpm_pool.php_flags[key] %}on{% else %}off{% endif %}
+{% for key, value in ( php_fpm_pool.php_flags | default({}) ).items() %}
+php_flag[{{ key }}] = {% if value %}on{% else %}off{% endif %}
 {% endfor %}
-{% endif %}
-{% if php_fpm_pool.php_admin_flags is defined %}
 
 ; PHP admin flags (not overridable)
-{% for key in php_fpm_pool.php_admin_flags.keys() %}
-php_admin_flag[{{ key }}] = {% if php_fpm_pool.php_admin_flags[key] %}on{% else %}off{% endif %}
+{% for key, value in ( php_fpm_pool.php_admin_flags | default({}) ).items() %}
+php_admin_flag[{{ key }}] = {% if value %}on{% else %}off{% endif %}
 {% endfor %}
-{% endif %}
-{% if php_fpm_pool.php_values is defined %}
 
 ; PHP values
-{% for key in php_fpm_pool.php_values.keys() %}
-php_value[{{ key }}] = {{ php_fpm_pool.php_values[key] }}
+{% for key, value in ( php_fpm_pool.php_values | default({}) ).items() %}
+php_value[{{ key }}] = {{ value }}
 {% endfor %}
-{% endif %}
-{% if php_fpm_pool.php_admin_values is defined %}
 
 ; PHP admin values (not overridable)
-{% for key in php_fpm_pool.php_admin_values.keys() %}
-php_admin_value[{{ key }}] = {{ php_fpm_pool.php_admin_values[key] }}
+{% for key, value in ( php_fpm_pool.php_admin_values | default({}) ).items() %}
+php_admin_value[{{ key }}] = {{ value }}
 {% endfor %}
-{% endif %}
