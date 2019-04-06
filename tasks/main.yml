@@ -3,6 +3,17 @@
   apt:
     name: php-fpm
 
+- name: Auto determinate php version
+  shell: php --version | grep '^PHP' | sed 's/^PHP \([0-9]*\.[0-9]*\).*/\1/g'
+  register: php_version
+  when: php_fpm_php_version is not defined
+
+- name: Set correct php version
+  set_fact:
+    php_fpm_php_version: "{{ php_version.stdout }}"
+  when: php_fpm_php_version is not defined and php_version.stdout is defined
+  changed_when: False
+
 - name: Delete default php-fpm pool.conf
   file:
     path: "/etc/php/{{ php_fpm_php_version }}/fpm/pool.d/www.conf"
