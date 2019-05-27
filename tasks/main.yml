@@ -7,6 +7,7 @@
   shell: php --version | grep '^PHP' | sed 's/^PHP \([0-9]*\.[0-9]*\).*/\1/g'
   register: php_version
   when: php_fpm_php_version is not defined
+  changed_when: False
 
 - name: Set correct php version
   set_fact:
