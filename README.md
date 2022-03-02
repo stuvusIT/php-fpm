@@ -12,6 +12,7 @@ Debian or Ubuntu
 
 | Name                                  | Required/Default         | Description                                                                                                                                               |
 |:--------------------------------------|:------------------------:|:----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `php_fpm_package_name`                | `php-fpm`                | The name of the apt package to install, e.g. `php8.0-fpm` or `php7.3-fpm`.                                                                                |
 | `php_fpm_disable_cron`                | `False`                  | Setting this to `True` removes the cron script to send emails for PHP warnings.                                                                           |
 | `php_fpm_pools`                       | :heavy_check_mark:       | List of php-fpm pools to define, see [pools](#pools).                                                                                                     |
 | `php_fpm_ini_values`                  | `{PHP: {expose_php: 0}}` | Dict of `php.ini` values, see [php.ini](#php.ini).                                                                                                        |
