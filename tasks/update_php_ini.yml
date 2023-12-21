@@ -1,7 +1,7 @@
 ---
 
 - name: Update php.ini section
-  include: update_php_ini_option.yml
+  include_tasks: update_php_ini_option.yml
   with_dict: "{{ section.value }}"
   loop_control:
     loop_var: option

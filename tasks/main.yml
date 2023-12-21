@@ -21,7 +21,7 @@
     state: absent
 
 - name: Update php.ini
-  include: update_php_ini.yml
+  include_tasks: update_php_ini.yml
   with_dict: "{{ php_fpm_php_ini_values }}"
   loop_control:
     loop_var: section
